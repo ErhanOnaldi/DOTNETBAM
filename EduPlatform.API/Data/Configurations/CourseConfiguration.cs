@@ -23,6 +23,15 @@ public class CourseConfiguration : IEntityTypeConfiguration<Course>
             .HasColumnType("decimal(18,2)")
             .HasDefaultValue(0);
 
+        builder.Property(c => c.InstructorName)
+            .IsRequired()
+            .HasMaxLength(150);
+        builder.Property(c => c.Level)
+            .HasConversion<string>();  // DB'de "Beginner", "Intermediate", "Advanced" olarak saklanır
+        // Shadow Properties — entity'de yok ama DB'de var
+        builder.Property<DateTime>("CreatedAt");
+        builder.Property<DateTime?>("UpdatedAt");
+
         // Global Query Filter — soft-delete
         // Bu filter tüm Course sorgularına otomatik eklenir
         builder.HasQueryFilter(c => !c.IsDeleted);

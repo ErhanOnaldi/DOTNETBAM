@@ -1,6 +1,7 @@
 using EduPlatform.API.Data;
 using EduPlatform.API.Extensions;
 using EduPlatform.API.Filters;
+using EduPlatform.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -16,6 +17,8 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<ApiKeyFilter>();  // ← tüm controller'lara
     options.Filters.Add<ApiResponseFilter>();
 });
+
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

@@ -19,4 +19,20 @@ public class AppDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
+
+    public override async Task<int> SaveChangesAsync(
+        CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            if (entry.State == EntityState.Added
+                && entry.Metadata.FindProperty("CreatedAt") != null)  // ← var mı diye sor
+                entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
+
+            if (entry.State == EntityState.Modified
+                && entry.Metadata.FindProperty("UpdatedAt") != null)  // ← var mı diye sor
+                entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+        }
+        return await base.SaveChangesAsync(cancellationToken);
+    }
 }
