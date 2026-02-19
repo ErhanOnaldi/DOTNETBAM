@@ -1,4 +1,5 @@
 using EduPlatform.API.Data;
+using EduPlatform.API.Data.UnitOfWork;
 using EduPlatform.API.Extensions;
 using EduPlatform.API.Filters;
 using EduPlatform.API.Repositories;
@@ -19,6 +20,8 @@ builder.Services.AddControllers(options =>
 });
 
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
